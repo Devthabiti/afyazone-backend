@@ -9,7 +9,7 @@ from django.db.models import Avg
 
 class DoctorProfiles(APIView):
     def get(self, request, format=None):
-        instance = DoctorProfile.objects.all()
+        instance = DoctorProfile.objects.filter(isComplete=True)
         profile = DoctorProfileSerializer(instance,many=True).data
 
         # Function to calculate average rating
