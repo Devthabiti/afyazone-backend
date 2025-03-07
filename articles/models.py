@@ -15,8 +15,8 @@ class Post(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    views = models.PositiveIntegerField(default=0, editable=False)
-    likes = models.PositiveIntegerField(default=0, editable=False)
+    views = models.PositiveIntegerField(default=100, editable=False)
+    likes = models.PositiveIntegerField(default=55, editable=False)
     image = models.ImageField(upload_to="articles/",)
     category= models.CharField(max_length=20 ,choices=choice)
     label= models.CharField(max_length=20 ,choices=choice2, default='others')
@@ -26,7 +26,7 @@ class Post(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return self.title
+        return f'{self.title}' 
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
