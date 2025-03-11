@@ -1,4 +1,5 @@
 from django.db import models
+import random
 from django.contrib.auth.models import User
 
 class Post(models.Model):
@@ -22,11 +23,19 @@ class Post(models.Model):
     label= models.CharField(max_length=20 ,choices=choice2, default='others')
 
 
+    def save(self, *args, **kwargs):
+        """ Assign random values to views and likes when creating a new post """
+        if not self.pk:  # Only set random values when the object is first created
+            self.views = random.randint(120, 270)
+            self.likes = random.randint(30, self.views // 2)
+
+        super().save(*args, **kwargs)
+
     class Meta:
         ordering = ['-id']
 
     def __str__(self):
-        return f'{self.title}' 
+        return f'views {self.views} likes {self.likes} | {self.title}' 
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
