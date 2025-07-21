@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import status
 from django.db.models import Avg
+from django.utils.timezone import now
+
 
 class DoctorProfiles(APIView):
     def get(self, request, format=None):
@@ -42,3 +44,24 @@ class UpdateDoctorProfile(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 update_doctor_profile = UpdateDoctorProfile.as_view()
+
+
+
+class UpdateDoctorStatus(APIView):
+    def post(self,request):
+        user_id = request.data.get("user_id") 
+        user = User.objects.get(id=user_id)
+        is_online = request.data.get("is_online")
+
+        if not user_id:
+            return Response({"error": "User ID is required"}, status=400)
+
+        doctor= DoctorProfile.objects.get(user=user)
+     
+        doctor.is_online = is_online
+        doctor.last_seen = now()
+        doctor.save()
+
+        return Response({"message": "Status updated successfully"})
+
+update_doctor_status = UpdateDoctorStatus.as_view()

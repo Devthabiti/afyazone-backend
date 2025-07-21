@@ -28,6 +28,7 @@ urlpatterns = [
     # doctors urls
     path('doctors/',doctor_profile, name='doctors'),
     path('send-review/',send_review, name='send-review'),
+    path('update_doctor_status/',update_doctor_status, name='update_doctor_status'),
     path('update-doctor-profile/',update_doctor_profile, name='update-doctor-profile'),
 
 
@@ -40,6 +41,14 @@ urlpatterns = [
     # articles and story urls
     path('post-article/',create_article, name='post-article'),
     path('show-article/',show_article, name='show-article'),
+    path('show-article-details/<int:pk>/',show_article_details, name='show-article-details'),
+    path('most-viewed/',most_viewed, name='most-viewed'),
+    path('most-liked/',most_liked, name='most-liked'),
+    path('hot-article/',hot_articles, name='hot-article'),
+    path('random-article/',random_article, name='random-article'),
+    path('show-magonjwa/',show_magonjwa, name='show-magonjwa'),
+    path('story-time/',story_time, name='story-time'),
+    path('food-fruit/',food_fruit, name='food-fruit'),
     path('create-comments/',create_comments, name='create-comments'),
     path('likes/',likes_view, name='likes'),
     path('views/',count_view, name='views'),
@@ -47,5 +56,6 @@ urlpatterns = [
 
     # advatizement
     path('ads/',show_ads, name='ads'),
+    path('phamacy/',show_phamacy, name='phamacy'),
  
 ]
